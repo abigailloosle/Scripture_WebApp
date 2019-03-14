@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+
+    Validation.RequireField("book", "You must enter a book");
+    Validation.RequireField("chapter", "Chapter is required");
+    Validation.RequireField("verse", "Verse is required");
+
+    var book = "";
+    var chapter = "";
+    var verse = "";
+    var comment = "";
+
+    if (IsPost && Validation.IsValid())
+    {
+        book = Request.Form["book"];
+        chapter = Request.Form["chapter"];
+        verse = Request.Form["verse"];
+        comment = Request.Form["comment"];
+
+        var db = Database.Open("ScriptureJournal");
+        var insertCommand = "INSERT INTO Journal (Book, Chapter, Verse, Comment, Date_Added) Values(@0, @1, @2, @3, @4)";
+        db.Execute(insertCommand, book, chapter, verse, comment, @DateTime.Now);
+        Response.Redirect("~/Scriptures");
+    }
+}
+
+<div class="container">
+    <h1>Add a Movie</h1>
+    @Html.ValidationSummary()
+    <form method="post">
+        <fieldset>
+            <legend>Detailed Scripture Journal Info</legend>
+            <p>
+                <label for="book">Book:</label>
+                <input type="text" name="book" value="@Request.Form["book"]" />
+                @Html.ValidationMessage("book")
+            </p>
+
+            <p>
+                <label for="chapter">Chapter:</label>
+                <input type="text" name="chapter" value="@Request.Form["chapter"]" />
+                @Html.ValidationMessage("genre")
+            </p>
+
+            <p>
+                <label for="verse">Verse:</label>
+                <input type="text" name="verse" value="@Request.Form["verse"]" />
+                @Html.ValidationMessage("verse")
+            </p>
+            <p>
+                <label for="comment">Comments:</label>
+                <textarea type="text" name="comment" value="@Request.Form["comment"]"></textarea>
+                @Html.ValidationMessage("comment")
+            </p>
+
+            <p><input type="submit" name="buttonSubmit" value="Add Scripture Thought" /></p>
+        </fieldset>
+    </form>
+</div>

@@ -1,0 +1,31 @@
+﻿@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Scripture Journal</title>
+
+    <!-- link bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="jumbotron">
+        <div id="container">
+            <h1>My Scripture Journal</h1>
+         </div>
+    </div>
+    <div id="container">
+        <div id="main">
+            @RenderBody()
+        </div>
+        <div id="footer">
+            &copy; @DateTime.Now.Year My Scripture Journal
+        </div>
+    </div>
+</body>
+</html>
